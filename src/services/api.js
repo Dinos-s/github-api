@@ -4,4 +4,4 @@ const api = axios.create({
     baseURL: "http://api.github.com/",
 })
 
-export default api
+export default api;
