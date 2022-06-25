@@ -7,7 +7,7 @@ function Profile() {
 
     return(
         <S.Wrapper>
-            <S.WrapperImage src="https://avatars.githubusercontent.com/u/56043956?v=4" alt="Avatar User"/>
+            <S.WrapperImage src={githubState.user.avatar} alt="Avatar User"/>
             <S.WrapperInfosUser>
                 <div>
                     <h1>{githubState.user.name}</h1>
@@ -22,16 +22,16 @@ function Profile() {
                         <span>{githubState.user.followers}</span>
                     </div>
                     <div>
+                        <h4>Followings</h4>
+                        <span>{githubState.user.followings}</span>
+                    </div>
+                    <div>
                         <h4>Gists</h4>
                         <span>{githubState.user.public_gists}</span>
                     </div>
                     <div>
                         <h4>Repos</h4>
                         <span>{githubState.user.public_repos}</span>
-                    </div>
-                    <div>
-                        <h4>Followings</h4>
-                        <span>{githubState.user.followings}</span>
                     </div>
                 </S.WrapperStatusCount>
             </S.WrapperInfosUser>

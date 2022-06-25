@@ -6,7 +6,7 @@ const useGithub = () => {
     GithubContext
   );
 
-  return { githubState, getUser};
+  return { githubState, getUser };
 };
 
 export default useGithub;

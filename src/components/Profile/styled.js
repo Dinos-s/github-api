@@ -26,8 +26,6 @@ export const WrapperInfosUser = styled.div`
         font-size: 16px;
         font-weight: bold;
     }
-
-    
 `;
 
 export const WrapperStatusCount = styled.div`
