@@ -13,12 +13,13 @@ const GithubProvider = ({children}) => {
         hasUser: false,
         loading: false,
         user: {
+            id: undefined,
             avatar: undefined,
             login: undefined,
             name: undefined,
             html_url: undefined,
             followers: 0,
-            followings: 0,
+            following: 0,
             public_gists: 0,
             public_repos: 0,
         },
@@ -30,7 +31,7 @@ const GithubProvider = ({children}) => {
         setGithubState((prevState)=>({
             ...prevState,
             loading: !prevState.loading,
-        }))
+        }));
 
         api.get(`users/${username}`).then(({ data }) => {
             setGithubState((prevState) => ({
@@ -43,7 +44,7 @@ const GithubProvider = ({children}) => {
                     name: data.name,
                     html_url: data.html_url,
                     followers: data.followers,
-                    followings: data.followings,
+                    following: data.following,
                     public_gists: data.public_gists,
                     public_repos: data.public_repos,
                 },
@@ -52,6 +53,26 @@ const GithubProvider = ({children}) => {
             setGithubState((prevState)=>({
                 ...prevState,
                 loading: !prevState.loading,
+            }));
+        });
+    }
+
+    const getUserRepos = (username) => {
+        api.get(`users/${username}/repos`).then(({ data }) => {
+            console.log("data: " + JSON.stringify(data));
+            setGithubState((prevState) => ({
+                ...prevState,
+                repositories: data,
+            }))
+        })
+    }
+
+    const getUserStarred = (username) => {
+        api.get(`users/${username}/starred`).then(({ data }) => {
+            console.log("data: " + JSON.stringify(data));
+            setGithubState((prevState) => ({
+                ...prevState,
+                starred: data,
             }))
         })
     }
@@ -59,6 +80,8 @@ const GithubProvider = ({children}) => {
     const contextValue = {
         githubState,
         getUser: useCallback((username) => getUser(username), []),
+        getUserRepos: useCallback((username) => getUserRepos(username), []),
+        getUserStarred: useCallback((username) => getUserStarred(username), []),
     }
 
     return (

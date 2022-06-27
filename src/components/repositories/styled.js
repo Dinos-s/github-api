@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Tab, TabList, Tabs,  TabPanel} from "react-tabs";
+import { Tab, TabList, Tabs,  TabPanel } from "react-tabs";
 
 export const WrapperTabs = styled(Tabs)`
     font-size: 16px;
@@ -46,3 +46,9 @@ export const WrapperTabPanel = styled(TabPanel)`
     }
 `;
 WrapperTabPanel.tabsRole = "TabPanel";
+
+export const WeappearList = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+`;

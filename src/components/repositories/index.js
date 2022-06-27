@@ -1,30 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useGithub from "../../hooks/github-hooks";
 import RepositoryItem from "../repository-item";
 import * as S from "./styled"
 
-const Repositories = () =>{
+const Repositories = () => {
+    const { githubState, getUserRepos, getUserStarred } = useGithub();
+    const [hasUserforSearchrepos, setStateHasUserforSearchrepos] = useState(false);
+
+    useEffect(() => {
+        if (githubState.user.login) {
+            getUserRepos(githubState.user.login);
+            getUserStarred(githubState.user.login);
+        }
+        setStateHasUserforSearchrepos(githubState.repositories);
+    }, [githubState.user.login])
+
     return (
         <>
-            <S.WrapperTabs
-            selectedTabClassName="is-selected"
-            selectedTabPanelClassName="is-selected">
-                <S.WrapperTabList>
-                    <S.WrapperTab>Repositories</S.WrapperTab>
-                    <S.WrapperTab>Starred</S.WrapperTab>
-                </S.WrapperTabList>
-                <S.WrapperTabPanel>
-                    <RepositoryItem 
-                        name="4446"
-                        linkToRepo="https://github.com/Dinos-s/4446"
-                        fullName="dinos-s/4446"
-                    /></S.WrapperTabPanel>
-                <S.WrapperTabPanel>
-                    <RepositoryItem  
-                        name="Alura2" 
-                        linkToRepo="https://github.com/Dinos-s/Alura2" 
-                        fullName="dinos-s/Alura2"
-                    /></S.WrapperTabPanel>    
-            </S.WrapperTabs>
+            {hasUserforSearchrepos ? (
+
+                <S.WrapperTabs
+                selectedTabClassName="is-selected"
+                selectedTabPanelClassName="is-selected">
+                    <S.WrapperTabList>
+                        <S.WrapperTab>Repositories</S.WrapperTab>
+                        <S.WrapperTab>Starred</S.WrapperTab>
+                    </S.WrapperTabList>
+                    <S.WrapperTabPanel>
+                        <S.WeappearList>
+                            {githubState.repositories.map((item) => (
+                                <RepositoryItem
+                                    key={item.id}
+                                    name={item.name} 
+                                    linkToRepo={item.full_name} 
+                                    fullName={item.full_name} 
+                                />
+                            ))}
+                        </S.WeappearList>
+                    </S.WrapperTabPanel>                  
+                    <S.WrapperTabPanel>
+                        <S.WeappearList>
+                            {githubState.starred.map((item) => (
+                                <RepositoryItem
+                                    key={item.id}
+                                    name={item.name} 
+                                    linkToRepo={item.html_url} 
+                                    fullName={item.full_name} 
+                                />
+                            ))}
+                        </S.WeappearList>
+                    </S.WrapperTabPanel>    
+                </S.WrapperTabs>
+            ):(
+               <>
+               </>
+            )}
         </>
     );
 }

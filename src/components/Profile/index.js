@@ -23,7 +23,7 @@ function Profile() {
                     </div>
                     <div>
                         <h4>Followings</h4>
-                        <span>{githubState.user.followings}</span>
+                        <span>{githubState.user.following}</span>
                     </div>
                     <div>
                         <h4>Gists</h4>
